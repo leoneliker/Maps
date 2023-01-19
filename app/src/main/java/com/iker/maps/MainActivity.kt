@@ -10,16 +10,34 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import java.util.Map
 
 
 class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var map:GoogleMap
 
+    var sydney = LatLng(-34.15, 151.5590)
+    var TamWorth = LatLng(-31.083332, 150.916672)
+    var NewCastle = LatLng(-32.916668, 151.750000)
+    var Brisbane = LatLng(-27.470125, 153.021072)
+
+    var latLngArrayList: ArrayList<LatLng> = ArrayList()
+    var locationNameArraylist: ArrayList<String> = ArrayList()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+
+        latLngArrayList!!.add(sydney);
+        locationNameArraylist!!.add("Sydney");
+        latLngArrayList!!.add(TamWorth);
+        locationNameArraylist!!.add("TamWorth");
+        latLngArrayList!!.add(NewCastle);
+        locationNameArraylist!!.add("New Castle");
+        latLngArrayList!!.add(Brisbane);
+        locationNameArraylist!!.add("Brisbase");
 
         val mapFragment  = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -30,7 +48,19 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
-        createMarker()
+        for (i in 0 until latLngArrayList.size) {
+            map.addMarker(
+                MarkerOptions().position(latLngArrayList.get(i))
+                    .title("Marker in " + locationNameArraylist.get(i))
+            )
+            map.animateCamera(
+                CameraUpdateFactory.newLatLngZoom(sydney,10f),
+                4000,
+                null
+            )
+        }
+
+
         map.setOnMarkerClickListener(OnMarkerClickListener { marker -> // on marker click we are getting the title of our marker
             // which is clicked and displaying it in a toast message.
             val markerName = marker.title
@@ -39,6 +69,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             false
         })
     }
+
+
 
     private fun createMarker() {
         val coordinates = LatLng(40.403108, -3.706084)
