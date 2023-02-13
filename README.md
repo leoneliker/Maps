@@ -5,7 +5,7 @@ Using googleAPI for maps and adding function to the markers
 ## Info
 This gonna be implemented in the main project MeetMap, so, this repository is the test zone for the google maps API for android.
 
-
+It is important to know, that you Will need yo implementes your own api key ok values directory
 
 
 To make this test zone, i follow some video tutorial of 
